@@ -10,8 +10,9 @@ https://www.data.go.kr/data/15012679/openapi.do
 apk 파일 다운로드 : https://github.com/wafla/Search_lunar_birthday/blob/main/%EC%9D%8C%EB%A0%A5%20%EC%83%9D%EC%9D%BC%20%EC%A1%B0%ED%9A%8C.apk
 
 [업데이트]
+
 v1.0.1 - 음력 날짜 선택 추가
 
-![1](https://github.com/wafla/Search_lunar_birthday/assets/50083524/955977d8-4617-4f2b-b34e-82eac5d7125b)
+![1](https://github.com/wafla/Search_lunar_birthday/assets/50083524/08195854-728e-4d3b-a76d-ace212281631)
+![2](https://github.com/wafla/Search_lunar_birthday/assets/50083524/740911c0-5a6c-429b-a1ba-09bca8cda88e)
 
-![2](https://github.com/wafla/Search_lunar_birthday/assets/50083524/8340f38e-9fe4-4059-9c50-c61b4b37c23b)
