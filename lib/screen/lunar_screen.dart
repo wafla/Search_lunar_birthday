@@ -135,8 +135,8 @@ class _LunarScreenState extends State<LunarScreen> {
         backgroundColor: Colors.black,
         selectedIconTheme: const IconThemeData(color: Colors.amber),
         unselectedIconTheme: const IconThemeData(color: Colors.amber),
-        selectedFontSize: 16,
-        unselectedFontSize: 14,
+        unselectedFontSize: 18,
+        selectedFontSize: 14,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white,
         onTap: (int index) {

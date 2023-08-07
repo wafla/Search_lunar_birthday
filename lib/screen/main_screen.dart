@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.black,
         selectedIconTheme: const IconThemeData(color: Colors.amber),
         unselectedIconTheme: const IconThemeData(color: Colors.amber),
-        selectedFontSize: 16,
+        selectedFontSize: 18,
         unselectedFontSize: 14,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white,
