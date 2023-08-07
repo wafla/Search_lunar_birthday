@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:lunar_calendar/screen/lunar_screen.dart';
 import 'package:lunar_calendar/screen/main_screen.dart';
 
 void main() {
@@ -11,20 +12,23 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: '음력 생일 조회',
-      home: HomeScreen(),
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate
-      ],
-      supportedLocales: [
-        Locale('en'),
-        Locale('ko'),
-        Locale('ja'),
-        Locale('ch')
-      ],
-    );
+    return MaterialApp(
+        title: '음력 생일 조회',
+        home: const HomeScreen(),
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('ko'),
+          Locale('ja'),
+          Locale('ch')
+        ],
+        routes: {
+          '/solar': (context) => const HomeScreen(),
+          '/lunar': (context) => const LunarScreen(),
+        });
   }
 }

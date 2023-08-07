@@ -1,19 +1,17 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lunar_calendar/models/birthday_model.dart';
 import 'package:lunar_calendar/models/date_model.dart';
 import 'package:lunar_calendar/services/api_service.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class LunarScreen extends StatefulWidget {
+  const LunarScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<LunarScreen> createState() => _LunarScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _LunarScreenState extends State<LunarScreen> {
   late Future<DateModel> lunData;
   late Future<B_DateModel> lunBirth;
   String lunDay = '01', lunMonth = '01';
@@ -45,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             const SizedBox(height: 50),
             const Text(
-              '양력 날짜를 선택해 주세요',
+              '음력 날짜를 선택해 주세요',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -67,10 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     date = selectedDate;
                     selectedDay = date.toString();
                     selectedDay = selectedDay.substring(0, 10);
-                    solyear = selectedDay.substring(0, 4);
-                    solmonth = selectedDay.substring(5, 7);
-                    solday = selectedDay.substring(8, 10);
-                    _future();
+                    lunMonth = selectedDay.substring(5, 7);
+                    lunDay = selectedDay.substring(8, 10);
+                    __future();
                   });
                 }
               },
@@ -81,41 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            Icon(Icons.keyboard_arrow_down, color: Colors.amber[800]),
-            const SizedBox(height: 20),
-            const Text(
-              "음력 날짜",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 20),
-            FutureBuilder(
-                future: _future(),
-                builder: ((context, snapshot) {
-                  if (snapshot.hasData) {
-                    lunDay = snapshot.data!.lunDay;
-                    lunMonth = snapshot.data!.lunMonth;
-                    __future();
-                    return Column(
-                      children: [
-                        Text(
-                          "${snapshot.data!.lunYear}-${snapshot.data!.lunMonth}-${snapshot.data!.lunDay}",
-                          style: TextStyle(
-                            color: Colors.amber[400],
-                          ),
-                        )
-                      ],
-                    );
-                  } else {
-                    return Text(
-                      "0000-00-00",
-                      style: TextStyle(color: Colors.amber[400]),
-                    );
-                  }
-                })),
             const SizedBox(height: 20),
             Icon(Icons.keyboard_arrow_down, color: Colors.amber[800]),
             const SizedBox(height: 20),
@@ -180,9 +142,9 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: (int index) {
           switch (index) {
             case 0:
+              Navigator.pop(context, '/lunar');
               break;
             case 1:
-              Navigator.pushNamed(context, '/lunar');
               break;
             default:
           }
@@ -193,11 +155,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
-
-  Future _future() async {
-    lunData = ApiService.getLunarDay(solyear, solmonth, solday);
-    return lunData;
   }
 
   Future __future() async {
