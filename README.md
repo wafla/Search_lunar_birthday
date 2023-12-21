@@ -1,4 +1,4 @@
-# Search_lunar_birthday(v1.0.1)
+# Search_lunar_birthday(v1.0.2)
 
 태어난 년-월-일을 선택하면 다음 음력 생일 날짜를 알려주는 어플입니다.
 
