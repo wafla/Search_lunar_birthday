@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lunar_calendar/models/birthday_model.dart';
@@ -7,7 +5,7 @@ import 'package:lunar_calendar/models/date_model.dart';
 import 'package:lunar_calendar/services/api_service.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -35,6 +33,21 @@ class _HomeScreenState extends State<HomeScreen> {
         '01');
   }
 
+  Future<void> _fetchData() async {
+    lunData = ApiService.getLunarDay(solyear, solmonth, solday);
+    final DateModel dateModel = await lunData;
+
+    lunBirth = ApiService.getLunarBirth(
+      now.year.toString(),
+      (int.parse(DateFormat('yyy').format(DateTime.now()).toString()) + 2)
+          .toString(),
+      dateModel.lunDay,
+      dateModel.lunMonth,
+    );
+    await lunBirth;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
             const Text(
               '양력 날짜를 선택해 주세요',
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600),
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -70,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     solyear = selectedDay.substring(0, 4);
                     solmonth = selectedDay.substring(5, 7);
                     solday = selectedDay.substring(8, 10);
-                    _future();
+                    _fetchData();
                   });
                 }
               },
@@ -87,35 +101,36 @@ class _HomeScreenState extends State<HomeScreen> {
             const Text(
               "음력 날짜",
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600),
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             const SizedBox(height: 20),
             FutureBuilder(
-                future: _future(),
-                builder: ((context, snapshot) {
-                  if (snapshot.hasData) {
-                    lunDay = snapshot.data!.lunDay;
-                    lunMonth = snapshot.data!.lunMonth;
-                    __future();
-                    return Column(
-                      children: [
-                        Text(
-                          "${snapshot.data!.lunYear}-${snapshot.data!.lunMonth}-${snapshot.data!.lunDay}",
-                          style: TextStyle(
-                            color: Colors.amber[400],
-                          ),
-                        )
-                      ],
-                    );
-                  } else {
-                    return Text(
-                      "0000-00-00",
-                      style: TextStyle(color: Colors.amber[400]),
-                    );
-                  }
-                })),
+              future: lunData,
+              builder: ((context, snapshot) {
+                if (snapshot.hasData) {
+                  lunDay = snapshot.data!.lunDay;
+                  lunMonth = snapshot.data!.lunMonth;
+                  return Column(
+                    children: [
+                      Text(
+                        "${snapshot.data!.lunYear}-${snapshot.data!.lunMonth}-${snapshot.data!.lunDay}",
+                        style: TextStyle(
+                          color: Colors.amber[400],
+                        ),
+                      )
+                    ],
+                  );
+                } else {
+                  return Text(
+                    "0000-00-00",
+                    style: TextStyle(color: Colors.amber[400]),
+                  );
+                }
+              }),
+            ),
             const SizedBox(height: 20),
             Icon(Icons.keyboard_arrow_down, color: Colors.amber[800]),
             const SizedBox(height: 20),
@@ -124,15 +139,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 const Text(
                   '다음 음력 생일',
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 20),
                 FutureBuilder(
-                  future: __future(),
-                  builder: ((context, snapshot) {
-                    if (snapshot.hasData) {
+                  future: lunBirth,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.hasData) {
                       return Column(
                         children: [
                           Text(
@@ -144,25 +164,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       );
                     } else {
-                      return Text(
-                        "0000-00-00",
-                        style: TextStyle(color: Colors.amber[400]),
-                      );
+                      return const CircularProgressIndicator();
                     }
-                  }),
+                  },
                 ),
                 const SizedBox(
                   height: 40,
-                ),
-                IconButton(
-                  onPressed: () async {
-                    setState(() {});
-                  },
-                  icon: Icon(
-                    Icons.refresh,
-                    color: Colors.amber[800],
-                    size: 40,
-                  ),
                 ),
               ],
             )
@@ -188,21 +195,16 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.sunny), label: '양력'),
-          BottomNavigationBarItem(icon: Icon(Icons.nightlight), label: '음력'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.sunny),
+            label: '양력',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.nightlight),
+            label: '음력',
+          ),
         ],
       ),
     );
-  }
-
-  Future _future() async {
-    lunData = ApiService.getLunarDay(solyear, solmonth, solday);
-    return lunData;
-  }
-
-  Future __future() async {
-    lunBirth = ApiService.getLunarBirth(now.year.toString(),
-        (int.parse(now.year.toString()) + 2).toString(), lunDay, lunMonth);
-    return lunBirth;
   }
 }

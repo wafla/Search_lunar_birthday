@@ -1,5 +1,3 @@
-// ignore_for_file: camel_case_types
-
 class B_DateModel {
   late String solYear = '0000', solMonth = '00', solDay = '00';
   B_DateModel(String solYear, String solMonth, String solDay) {

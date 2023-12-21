@@ -116,16 +116,6 @@ class _LunarScreenState extends State<LunarScreen> {
                 const SizedBox(
                   height: 40,
                 ),
-                IconButton(
-                  onPressed: () async {
-                    setState(() {});
-                  },
-                  icon: Icon(
-                    Icons.refresh,
-                    color: Colors.amber[800],
-                    size: 40,
-                  ),
-                ),
               ],
             )
           ],
