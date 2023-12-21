@@ -12,6 +12,7 @@ apk 파일 다운로드 : [https://github.com/wafla/Search_lunar_birthday/blob/m
 [업데이트]
 
 v1.0.1 - 음력 날짜 선택 추가
+
 v1.0.2 - FutureBuilder 갱신 문제 해결, 앱 아이콘 추가 (아이콘 출처 : https://www.flaticon.com/kr/authors/juicy-fish)
 
 ![1](https://github.com/wafla/Search_lunar_birthday/assets/50083524/d9370145-2025-45ea-bd32-ffc7db9a2703)
