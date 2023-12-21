@@ -32,3 +32,5 @@ class MainApp extends StatelessWidget {
         });
   }
 }
+
+// APP ICON LICENSE = https://www.flaticon.com/kr/authors/juicy-fish
